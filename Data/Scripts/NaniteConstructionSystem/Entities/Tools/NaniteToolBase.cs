@@ -1,22 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using NaniteConstructionSystem.Extensions;
+using Sandbox.Definitions;
+using Sandbox.Game;
+using Sandbox.Game.Entities;
 using Sandbox.ModAPI;
+using VRage;
 using VRage.Game;
 using VRage.Game.Entity;
-using VRage.ModAPI;
-using VRageMath;
 //using Ingame = VRage.Game.ModAPI.Ingame;
-using Ingame = Sandbox.ModAPI.Ingame;
 using VRage.Game.ModAPI;
 using VRage.ObjectBuilders;
-using VRage.Utils;
-using Sandbox.Game.Entities;
-using Sandbox.Game;
-using Sandbox.Definitions;
-using VRage;
-
-using NaniteConstructionSystem.Extensions;
+using VRageMath;
 
 namespace NaniteConstructionSystem.Entities.Tools
 {
@@ -89,14 +84,14 @@ namespace NaniteConstructionSystem.Entities.Tools
                 {
                     TransferRemainingComponents();
 
-                    Logging.Instance.WriteLine(string.Format("GRINDER completed.  Target block: {0} - (EntityID: {1} Elapsed: {2})", 
+                    Logging.Instance.WriteLine(string.Format("GRINDER completed.  Target block: {0} - (EntityID: {1} Elapsed: {2})",
                       m_targetBlock.FatBlock != null ? m_targetBlock.FatBlock.GetType().Name : m_targetBlock.GetType().Name, m_targetBlock.FatBlock != null ? m_targetBlock.FatBlock.EntityId : 0,
                       m_completeTime + m_waitTime), 1);
-                    
+
                     return;
                 }
 
-                Logging.Instance.WriteLine(string.Format("TOOL completed.  Target block: {0} - (EntityID: {1} Elapsed: {2})", 
+                Logging.Instance.WriteLine(string.Format("TOOL completed.  Target block: {0} - (EntityID: {1} Elapsed: {2})",
                   m_targetBlock.FatBlock != null ? m_targetBlock.FatBlock.GetType().Name : m_targetBlock.GetType().Name, m_targetBlock.FatBlock != null ? m_targetBlock.FatBlock.EntityId : 0,
                   m_completeTime + m_waitTime), 1);
             }
@@ -135,11 +130,6 @@ namespace NaniteConstructionSystem.Entities.Tools
                 foreach (var item in components)
                 {
                     TransferFromItem((MyObjectBuilder_PhysicalObject)MyObjectBuilderSerializer.CreateNewObject(item.Value.Item2.Id), item.Value.Item1);
-                }
-                pos = 3;
-                foreach (var item in m_inventory)
-                {
-                    MyFloatingObjects.Spawn(new MyPhysicalInventoryItem(item.Value.Item1, item.Value.Item2), Vector3D.Transform(m_targetBlock.Position * m_targetBlock.CubeGrid.GridSize, m_targetBlock.CubeGrid.WorldMatrix), m_targetBlock.CubeGrid.WorldMatrix.Forward, m_targetBlock.CubeGrid.WorldMatrix.Up);
                 }
             }
             catch (Exception ex)
@@ -253,7 +243,7 @@ namespace NaniteConstructionSystem.Entities.Tools
             {
                 if (m_targetBlock == null)
                     return;
-            
+
                 if (m_targetBlock.HasDeformation)
                     m_targetBlock.FixBones(0f, 1f);
 
@@ -270,20 +260,20 @@ namespace NaniteConstructionSystem.Entities.Tools
                 }
             }
             catch (Exception e)
-                { Logging.Instance.WriteLine($"{e}"); }
+            { Logging.Instance.WriteLine($"{e}"); }
         }
 
         private void CreateTool()
         {
             MyCubeBlockDefinition blockDefinition = (MyCubeBlockDefinition)m_targetBlock.BlockDefinition;
-            var grindPerUpdate = (MyAPIGateway.Session.GrinderSpeedMultiplier 
-              * NaniteConstructionManager.Settings.DeconstructionEfficiency / blockDefinition.DisassembleRatio) 
+            var grindPerUpdate = (MyAPIGateway.Session.GrinderSpeedMultiplier
+              * NaniteConstructionManager.Settings.DeconstructionEfficiency / blockDefinition.DisassembleRatio)
               * blockDefinition.IntegrityPointsPerSec;
 
             m_completeTime = (int)(m_targetBlock.BuildIntegrity / grindPerUpdate * 1000f);
 
-            Logging.Instance.WriteLine(string.Format("TOOL started.  Target block: {0} - {1}ms - {2} {3} {4}", 
+            Logging.Instance.WriteLine(string.Format("TOOL started.  Target block: {0} - {1}ms - {2} {3} {4}",
               blockDefinition.Id, m_completeTime, blockDefinition.IntegrityPointsPerSec, m_targetBlock.BuildIntegrity, grindPerUpdate), 1);
-        }    
+        }
     }
 }
