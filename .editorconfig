@@ -15,3 +15,6 @@ insert_final_newline = true
 [*.sbc]
 indent_style = space
 indent_size = 2
+
+[*.cs]
+csharp_space_after_keywords_in_control_flow_statements = true
