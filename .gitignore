@@ -29,3 +29,6 @@
 *.mod
 /obj/Release
 /Data/Scripts/NaniteConstructionSystem/obj/Debug
+/Data/Scripts/NaniteConstructionSystem/obj/Release
+/Data/Scripts/NaniteConstructionSystem/obj/x64
+/Data/Scripts/NaniteConstructionSystem/.vs
