@@ -28,3 +28,4 @@
 *.sln
 *.mod
 /obj/Release
+/Data/Scripts/NaniteConstructionSystem/obj/Debug

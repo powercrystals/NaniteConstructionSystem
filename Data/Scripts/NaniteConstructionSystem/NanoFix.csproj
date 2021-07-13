@@ -152,7 +152,7 @@
     <Compile Include="Entities\Targets\NaniteConstructionTargets.cs" />
     <Compile Include="Entities\Targets\NaniteDeconstructionTargets.cs" />
     <Compile Include="Entities\Targets\NaniteFloatingTargets.cs" />
-    <Compile Include="Entities\Targets\NaniteMedicalTargets.cs" />
+    <Compile Include="Entities\Targets\NaniteLifeSupportTargets.cs" />
     <Compile Include="Entities\Targets\NaniteMiningTargets.cs" />
     <Compile Include="Entities\Targets\NaniteProjectionTargets.cs" />
     <Compile Include="Entities\Targets\NaniteTargetBlocksBase.cs" />
